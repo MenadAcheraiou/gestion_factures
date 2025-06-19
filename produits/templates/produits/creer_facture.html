@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2 class="my-4">Créer une facture</h2>
+
+<form method="post">
+  {% csrf_token %}
+
+  <div class="mb-3">
+    <label for="client" class="form-label">Nom du client</label>
+    <input type="text" name="client" id="client" class="form-control" required>
+  </div>
+
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Produit</th>
+        <th>Prix</th>
+        <th>Quantité</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for produit in produits %}
+      <tr>
+        <td>{{ produit.nom }}</td>
+        <td>{{ produit.prix }} €</td>
+        <td>
+          <input type="number" name="produit_{{ produit.id }}" value="0" min="0" class="form-control" style="width: 80px;">
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <button type="submit" class="btn btn-primary">Créer facture</button>
+</form>
+
+{% if message %}
+  <div class="alert alert-warning mt-3">{{ message }}</div>
+{% endif %}
+
+{% endblock %}
+
+
+
+
+
+
+
